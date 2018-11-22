@@ -15,12 +15,6 @@ MongoClient.connect(process.env.MONGODB_URI, (err, database) => {
 app.use(express.json());
 app.use(cors());
 
-// app.post('/', (req, res) => {
-//   db.collection('emails').insertOne({email: req.body.email})
-//     .then(() => res.json("Success!"))
-//     .catch((err) => res.status(500).json(err));
-// });
-
 app.get('/', (req, res) => {
   db.collection('emails').find({ email: req.body.email }).toArray()
     .then((emails) => res.json(emails))
@@ -28,12 +22,13 @@ app.get('/', (req, res) => {
 });
 
 app.post('/', (req, res) => {
+  const deleteKey = [...Array(10)].map(i=>(~~(Math.random()*36)).toString(36)).join('');
   db.collection('emails').find({ email: req.body.email }).toArray()
     .then((emails) => {
       if(emails.length > 0) {
         return res.json("email already exists yo!");
       }
-      return db.collection('emails').insertOne({email: req.body.email})
+      return db.collection('emails').insertOne({email: req.body.email, deleteKey})
         .then(() => res.json("Success!"))
     })
     .catch((err) => res.status(500).json(err));
