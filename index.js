@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(cors());
 
 app.post('/', (req, res) => {
-  db.emails.insert(req.body.email)
+  db.collection('emails').insert(req.body.email)
     .then(() => res.json("Success!"))
     .catch(() => res.status(500).json("nah buddy"));
 });
