@@ -26,3 +26,15 @@ app.get('/', (req, res) => {
     .then((emails) => res.json(emails))
     .catch((err) => res.status(500).json(err));
 });
+
+app.post('/', (req, res) => {
+  db.collection('emails').find({ email: req.body.email }).toArray()
+    .then((emails) => {
+      if(emails.length > 0) {
+        return res.json("email already exists yo!");
+      }
+      return db.collection('emails').insertOne({email: req.body.email})
+        .then(() => res.json("Success!"))
+    })
+    .catch((err) => res.status(500).json(err));
+});
