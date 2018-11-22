@@ -15,12 +15,6 @@ MongoClient.connect(process.env.MONGODB_URI, (err, database) => {
 app.use(express.json());
 app.use(cors());
 
-app.get('/', (req, res) => {
-  db.collection('emails').find({ email: req.body.email }).toArray()
-    .then((emails) => res.json(emails))
-    .catch((err) => res.status(500).json(err));
-});
-
 app.post('/', (req, res) => {
   const _id = [...Array(10)].map(i=>(~~(Math.random()*36)).toString(36)).join('');
   db.collection('emails').find({ email: req.body.email }).toArray()
@@ -30,6 +24,18 @@ app.post('/', (req, res) => {
       }
       return db.collection('emails').insertOne({email: req.body.email, _id})
         .then(() => res.json("Success!"))
+    })
+    .catch((err) => res.status(500).json(err));
+});
+
+app.get('/delete/:email/:id', (req, res) => {
+  db.collection('emails').findOne({ email: req.params.email })
+    .then((emails) => {
+      if(emails._id === req.params.id ) {
+        return res.json("deleted your email bro!")
+        // remember to put actual delete logic
+      }
+      return res.json("no bueno amigo");
     })
     .catch((err) => res.status(500).json(err));
 });
