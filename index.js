@@ -8,7 +8,7 @@ let db;
 
 MongoClient.connect(process.env.MONGODB_URI, (err, database) => {
   if(err) throw err;
-  db = database.db('dbName');
+  db = database.db;
   app.listen(process.env.PORT || 8080);
 });
 
