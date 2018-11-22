@@ -22,7 +22,7 @@ app.post('/', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-  db.find({ email: req.body.email })
+  db.collection('emails').find()
     .then((emails) => res.json(emails))
     .catch((err) => res.status(500).json(err));
 });
