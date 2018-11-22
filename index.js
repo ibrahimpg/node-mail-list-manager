@@ -22,7 +22,7 @@ app.post('/', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-  db.collection('emails').find({ email: req.body.email })
+  db.collection('emails').find({ email: 'ibrahim.ghalioum@gmail.com' })
     .then((emails) => res.json(emails))
     .catch((err) => res.status(500).json(err));
 });
