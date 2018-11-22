@@ -8,7 +8,7 @@ let db;
 
 MongoClient.connect(process.env.MONGODB_URI, (err, database) => {
   if(err) throw err;
-  db = database.db;
+  db = database.db();
   app.listen(process.env.PORT || 8080);
 });
 
@@ -22,7 +22,7 @@ app.post('/', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-  db.collection('emails').find({ email: req.body.email })
+  db.collection('emails').findOne({ email: req.body.email })
     .then((emails) => res.json(emails))
     .catch((err) => res.status(500).json(err));
 });
