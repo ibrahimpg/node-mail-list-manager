@@ -9,15 +9,14 @@ let db;
 MongoClient.connect(process.env.MONGODB_URI, (err, database) => {
   if(err) throw err;
   db = database;
-  const port = process.env.PORT || 8080;
-  app.listen(port);
+  app.listen(process.env.PORT || 8080);
 });
 
 app.use(express.json());
 app.use(cors());
 
 app.post('/', (req, res) => {
-  db.emails.insert( { item: req.body.email } )
+  db.insert( { item: req.body.email } )
     .then(() => res.json("Success!"))
     .catch(() => res.status(500));
 });
