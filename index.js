@@ -17,6 +17,7 @@ app.use(express.json());
 app.use(cors());
 
 app.post('/', (req, res) => {
+  // eslint-disable-next-line no-unused-vars, no-bitwise
   const _id = [...Array(10)].map(i => (~~(Math.random() * 36)).toString(36)).join('');
   db.collection('emails').find({ email: req.body.email }).toArray()
     .then((emails) => {
