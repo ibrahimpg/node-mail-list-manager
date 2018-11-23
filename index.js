@@ -10,7 +10,7 @@ let db;
 mongodb.MongoClient.connect(process.env.MONGODB_URI)
   .then((database) => {
     db = database.db();
-    app.listen(process.env.PORT || 8080);
+    app.listen(process.env.PORT);
   })
   .catch(err => console.log(err));
 
@@ -20,19 +20,19 @@ app.use(cors());
 app.post('/', (req, res) => {
   db.collection('subscribers').find({ email: req.body.email }).toArray()
     .then((subscribers) => {
-      if (subscribers.length > 0) {
-        return res.sendStatus(400);
+      if (subscribers.length === 0) {
+        return db.collection('subscribers').insertOne({
+          email: req.body.email,
+          _id: [...Array(10)].map(i => (~~(Math.random() * 36)).toString(36)).join(''),
+        })
+          .then(() => res.sendStatus(201));
       }
-      return db.collection('subscribers').insertOne({
-        email: req.body.email,
-        _id: [...Array(10)].map(i => (~~(Math.random() * 36)).toString(36)).join(''),
-      })
-        .then(() => res.sendStatus(201));
+      return res.sendStatus(400);
     })
     .catch(() => res.sendStatus(500));
 });
 
-app.get('/delete/:email/:id', (req, res) => {
+app.get('/unsubscribe/:email/:id', (req, res) => {
   db.collection('subscribers').find({ email: req.params.email }).toArray()
     .then((subscribers) => {
       if (subscribers.length === 1 && subscribers[0]._id === req.params.id) {
@@ -41,5 +41,5 @@ app.get('/delete/:email/:id', (req, res) => {
       }
       return res.sendStatus(400);
     })
-    .catch(err => res.status(500).json(err));
+    .catch(() => res.sendStatus(500));
 });
