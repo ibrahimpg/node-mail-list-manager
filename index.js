@@ -7,11 +7,18 @@ const app = express();
 
 let db;
 
-mongodb.MongoClient.connect(process.env.MONGODB_URI, (err, database) => {
-  if (err) throw err;
-  db = database.db();
-  app.listen(process.env.PORT || 8080);
-});
+// mongodb.MongoClient.connect(process.env.MONGODB_URI, (err, database) => {
+//   if (err) throw err;
+//   db = database.db();
+//   app.listen(process.env.PORT || 8080);
+// });
+
+mongodb.MongoClient.connect(process.env.MONGODB_URI)
+  .then((database) => {
+    db = database.db();
+    app.listen(process.env.PORT || 8080);
+  })
+  .catch(() => console.log('n'));
 
 app.use(express.json());
 app.use(cors());
