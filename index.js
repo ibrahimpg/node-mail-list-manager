@@ -26,9 +26,9 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
 app.use(express.json());
 app.use(cors());
 
-app.post('/subscribe', subscribe);
+app.post('/subscribe', subscribe(db));
 
-app.get('/unsubscribe/:email/:id', unsubscribe);
+app.get('/unsubscribe/:email/:id', unsubscribe(db));
 
 // app.post('/send', send);
 
