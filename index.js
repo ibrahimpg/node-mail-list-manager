@@ -1,4 +1,4 @@
-/* eslint-disable no-underscore-dangle, no-unused-vars, no-bitwise */
+/* eslint-disable no-underscore-dangle, no-unused-vars, no-bitwise, no-console */
 const express = require('express');
 const mongodb = require('mongodb');
 const cors = require('cors');
@@ -12,7 +12,7 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI)
     db = database.db();
     app.listen(process.env.PORT || 8080);
   })
-  .catch(() => console.log('What whattt'));
+  .catch(err => console.log(err));
 
 app.use(express.json());
 app.use(cors());
