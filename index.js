@@ -12,9 +12,7 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI)
     db = database.db();
     app.listen(process.env.PORT || 8080);
   })
-  .catch((err) => {
-    throw err;
-  });
+  .catch(err => console.log(err));
 
 app.use(express.json());
 app.use(cors());
