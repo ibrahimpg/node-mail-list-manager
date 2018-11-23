@@ -20,7 +20,7 @@ app.use(cors());
 app.post('/', (req, res) => {
   db.collection('subscribers').find({ email: req.body.email }).toArray()
     .then((subscribers) => {
-      if (subscribers.length === 0) {
+      if (subscribers.length === 0 && /^-?\d+\.?\d*$/.test(req.body.email) === true) {
         return db.collection('subscribers').insertOne({
           email: req.body.email,
           _id: [...Array(10)].map(i => (~~(Math.random() * 36)).toString(36)).join(''),
