@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(cors());
 
 app.post('/', (req, res) => {
-  db.collection('emails').find({ email: req.body.email }).toArray()
+  db.collection('subscribers').find({ email: req.body.email }).toArray()
     .then((emails) => {
       if (emails.length > 0) {
         return res.json('email already exists yo!');
@@ -33,11 +33,11 @@ app.post('/', (req, res) => {
 });
 
 app.get('/delete/:email/:id', (req, res) => {
-  db.collection('emails').find({ email: req.body.email }).toArray()
-    .then((emails) => {
-      if (emails[0]._id === req.params.id) {
-        return db.collection('emails').remove({ email: req.params.email })
-          .then(() => res.json('deleted your email bro!'));
+  db.collection('subscribers').findOne({ email: req.params.email })
+    .then((subscriber) => {
+      if (subscriber._id === req.params.id) {
+        return db.collection('subscribers').remove({ email: req.params.email })
+          .then(() => res.sendStatus(200));
       }
       return res.sendStatus(400);
     })
