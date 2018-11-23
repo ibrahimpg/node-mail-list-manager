@@ -27,9 +27,9 @@ app.post('/', (req, res) => {
         email: req.body.email,
         _id: [...Array(10)].map(i => (~~(Math.random() * 36)).toString(36)).join(''),
       })
-        .then(() => res.json('Success!'));
+        .then(() => res.sendStatus(201));
     })
-    .catch(err => res.status(500).json(err));
+    .catch(() => res.sendStatus(500));
 });
 
 app.get('/delete/:email/:id', (req, res) => {
@@ -38,10 +38,8 @@ app.get('/delete/:email/:id', (req, res) => {
       if (emails._id === req.params.id) {
         return db.collection('emails').remove({ email: req.params.email })
           .then(() => res.json('deleted your email bro!'));
-      } if (emails === null) {
-        return res.json('no such email broh');
       }
-      return res.json('no bueno amigo');
+      return res.json(emails);
     })
     .catch(err => res.status(500).json(err));
 });
