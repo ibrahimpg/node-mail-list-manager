@@ -19,11 +19,11 @@ app.use(cors());
 
 app.post('/', (req, res) => {
   db.collection('subscribers').find({ email: req.body.email }).toArray()
-    .then((emails) => {
-      if (emails.length > 0) {
+    .then((subscribers) => {
+      if (subscribers.length > 0) {
         return res.json('email already exists yo!');
       }
-      return db.collection('emails').insertOne({
+      return db.collection('subscribers').insertOne({
         email: req.body.email,
         _id: [...Array(10)].map(i => (~~(Math.random() * 36)).toString(36)).join(''),
       })
