@@ -33,13 +33,13 @@ app.post('/', (req, res) => {
 });
 
 app.get('/delete/:email/:id', (req, res) => {
-  db.collection('emails').findOne({ email: req.params.email })
+  db.collection('emails').find({ email: req.body.email }).toArray()
     .then((emails) => {
-      if (emails._id === req.params.id) {
+      if (emails[0]._id === req.params.id) {
         return db.collection('emails').remove({ email: req.params.email })
           .then(() => res.json('deleted your email bro!'));
       }
-      return res.json(emails);
+      return res.sendStatus(400);
     })
     .catch(err => res.status(500).json(err));
 });
