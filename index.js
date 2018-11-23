@@ -21,7 +21,7 @@ app.post('/', (req, res) => {
   db.collection('subscribers').find({ email: req.body.email }).toArray()
     .then((subscribers) => {
       if (subscribers.length > 0) {
-        return res.json('email already exists yo!');
+        return res.sendStatus(400);
       }
       return db.collection('subscribers').insertOne({
         email: req.body.email,
@@ -35,7 +35,7 @@ app.post('/', (req, res) => {
 app.get('/delete/:email/:id', (req, res) => {
   db.collection('subscribers').find({ email: req.params.email }).toArray()
     .then((subscribers) => {
-      if (subscribers[0]._id === req.params.id) {
+      if (subscribers.length === 1 && subscribers[0]._id === req.params.id) {
         return db.collection('subscribers').remove({ email: req.params.email })
           .then(() => res.sendStatus(200));
       }
