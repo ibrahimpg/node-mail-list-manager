@@ -12,13 +12,12 @@ const unsubscribe = require('./controllers/unsubscribe');
 // const send = require('./controllers/send');
 // const test = require('./controllers/test');
 
-let db;
-
 const app = express();
 
 mongodb.MongoClient.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
   .then((database) => {
-    db = database.db();
+    const db = database.db();
+    app.set('db', db);
     app.listen(process.env.PORT);
   })
   .catch(err => console.log(err));
@@ -36,7 +35,7 @@ app.get('/unsubscribe/:email/:id', unsubscribe);
 
 app.post('/viewall', (req, res) => {
   if (req.body.password === process.env.PASSWORD) {
-    return db.collection('subscribers').find().toArray()
+    return app.get('db').collection('subscribers').find().toArray()
       .then(subscribers => res.json(subscribers))
       .catch(() => res.sendStatus(500));
   }
