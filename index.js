@@ -12,12 +12,14 @@ const unsubscribe = require('./controllers/unsubscribe');
 // const send = require('./controllers/send');
 // const test = require('./controllers/test');
 
+// let db;
+
 const app = express();
 
 mongodb.MongoClient.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
   .then((database) => {
-    const db = database.db();
-    app.set('db', db);
+    // db = database.db();
+    app.set('db', database.db());
     app.listen(process.env.PORT);
   })
   .catch(err => console.log(err));
