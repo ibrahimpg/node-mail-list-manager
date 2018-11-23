@@ -1,7 +1,7 @@
 {
-  "name": "email-form-handler",
+  "name": "node-mail-list-manager",
   "version": "1.0.0",
-  "description": "An email submission form handler built with Node.js",
+  "description": "A Node.js API for managing an email subscriber list.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ibrahimpg/email-submit.git"
+    "url": "git+https://github.com/ibrahimpg/node-mail-list-manager.git"
   },
   "author": "Ibrahim P.G.",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ibrahimpg/email-submit/issues"
+    "url": "https://github.com/ibrahimpg/node-mail-list-manager/issues"
   },
-  "homepage": "https://github.com/ibrahimpg/email-submit#readme",
+  "homepage": "https://github.com/ibrahimpg/node-mail-list-manager#readme",
   "dependencies": {
     "cors": "2.8.5",
     "express": "4.16.4",
