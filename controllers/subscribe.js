@@ -1,5 +1,5 @@
 /* eslint-disable no-bitwise, no-undef */
-module.exports = (req, res, db) => {
+module.exports = (req, res) => {
   db.collection('subscribers').find({ email: req.body.email }).toArray()
     .then((subscribers) => {
       if (subscribers.length === 0 && /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/.test(req.body.email) === true) {
