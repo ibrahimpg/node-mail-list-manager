@@ -46,7 +46,7 @@ app.get('/unsubscribe/:email/:id', (req, res) => {
 
 app.post('/viewall', (req, res) => {
   if (req.body.password === process.env.PASSWORD) {
-    db.collection('subscribers').find().toArray()
+    return db.collection('subscribers').find().toArray()
       .then(subscribers => res.json(subscribers))
       .catch(() => res.sendStatus(500));
   }
