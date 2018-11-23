@@ -1,4 +1,9 @@
 /* eslint-disable no-bitwise, no-undef */
+
+const express = require('express');
+
+const app = express();
+
 module.exports = (req, res) => {
   app.get('db').collection('subscribers').find({ email: req.body.email }).toArray()
     .then((subscribers) => {
