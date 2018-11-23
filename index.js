@@ -7,9 +7,9 @@ const nodemailer = require('nodemailer');
 const cors = require('cors');
 
 // Controllers
-const subscribe = require('./controllers/subscribe').default;
-const unsubscribe = require('./controllers/unsubscribe').default;
-const send = require('./controllers/send');
+const subscribe = require('./controllers/subscribe');
+const unsubscribe = require('./controllers/unsubscribe');
+// const send = require('./controllers/send');
 
 let db;
 
@@ -29,7 +29,7 @@ app.post('/subscribe', subscribe);
 
 app.get('/unsubscribe/:email/:id', unsubscribe);
 
-app.post('/send', send);
+// app.post('/send', send);
 
 app.post('/viewall', (req, res) => {
   if (req.body.password === process.env.PASSWORD) {
