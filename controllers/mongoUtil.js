@@ -5,6 +5,7 @@ let _db;
 exports.connectToServer = (callback) => {
   mongodb.MongoClient.connect(process.env.MONGODB_URI, (err, database) => {
     _db = database.db();
+    console.log(_db);
     return callback(err);
   });
 };
