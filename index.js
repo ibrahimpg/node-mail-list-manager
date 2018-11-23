@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars, no-bitwise, no-console */
+/* eslint-disable no-console */
 
 // Packages
 const express = require('express');
