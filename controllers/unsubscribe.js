@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-module.exports = (req, res) => {
+module.exports = (req, res, db) => {
   db.collection('subscribers').find({ email: req.params.email }).toArray()
     .then((subscribers) => {
       if (subscribers.length === 1 && subscribers[0]._id === req.params.id) {
