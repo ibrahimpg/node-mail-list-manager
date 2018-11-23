@@ -2,9 +2,11 @@
 
 // Packages
 const express = require('express');
-const mongodb = require('mongodb');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
+
+// MongoDB Connection Module
+const mongoUtil = require('./controllers/mongoUtil');
 
 // Controllers
 const subscribe = require('./controllers/subscribe');
@@ -16,13 +18,18 @@ const unsubscribe = require('./controllers/unsubscribe');
 
 const app = express();
 
-mongodb.MongoClient.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
-  .then((database) => {
-    // db = database.db();
-    app.set('db', database.db());
-    app.listen(process.env.PORT);
-  })
-  .catch(err => console.log(err));
+mongoUtil.connectToServer(() => {
+  app.listen(process.env.PORT);
+});
+
+const db = mongoUtil.getDb();
+
+// mongodb.MongoClient.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
+//   .then((database) => {
+//     db = database.db();
+//     app.listen(process.env.PORT);
+//   })
+//   .catch(err => console.log(err));
 
 app.use(express.json());
 app.use(cors());
@@ -37,7 +44,7 @@ app.get('/unsubscribe/:email/:id', unsubscribe);
 
 app.post('/viewall', (req, res) => {
   if (req.body.password === process.env.PASSWORD) {
-    return app.get('db').collection('subscribers').find().toArray()
+    return db.collection('subscribers').find().toArray()
       .then(subscribers => res.json(subscribers))
       .catch(() => res.sendStatus(500));
   }
