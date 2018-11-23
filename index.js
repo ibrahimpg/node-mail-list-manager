@@ -10,6 +10,7 @@ const cors = require('cors');
 const subscribe = require('./controllers/subscribe');
 const unsubscribe = require('./controllers/unsubscribe');
 // const send = require('./controllers/send');
+// const test = require('./controllers/test');
 
 let db;
 
@@ -30,6 +31,8 @@ app.post('/subscribe', subscribe);
 app.get('/unsubscribe/:email/:id', unsubscribe);
 
 // app.post('/send', send);
+
+// app.post('/test', test);
 
 app.post('/viewall', (req, res) => {
   if (req.body.password === process.env.PASSWORD) {
