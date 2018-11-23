@@ -1,11 +1,19 @@
-/* eslint-disable no-underscore-dangle, no-unused-vars, no-bitwise, no-console */
+/* eslint-disable no-unused-vars, no-bitwise, no-console */
+
+// Packages
 const express = require('express');
 const mongodb = require('mongodb');
+const nodemailer = require('nodemailer');
 const cors = require('cors');
 
-const app = express();
+// Controllers
+const subscribe = require('./controllers/subscribe');
+const unsubscribe = require('./controllers/unsubscribe');
+const send = require('./controllers/send');
 
 let db;
+
+const app = express();
 
 mongodb.MongoClient.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
   .then((database) => {
@@ -17,32 +25,11 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
 app.use(express.json());
 app.use(cors());
 
-app.post('/', (req, res) => {
-  db.collection('subscribers').find({ email: req.body.email }).toArray()
-    .then((subscribers) => {
-      if (subscribers.length === 0 && /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/.test(req.body.email) === true) {
-        return db.collection('subscribers').insertOne({
-          email: req.body.email,
-          _id: [...Array(10)].map(i => (~~(Math.random() * 36)).toString(36)).join(''),
-        })
-          .then(() => res.sendStatus(201));
-      }
-      return res.sendStatus(400);
-    })
-    .catch(() => res.sendStatus(500));
-});
+app.post('/subscribe', subscribe);
 
-app.get('/unsubscribe/:email/:id', (req, res) => {
-  db.collection('subscribers').find({ email: req.params.email }).toArray()
-    .then((subscribers) => {
-      if (subscribers.length === 1 && subscribers[0]._id === req.params.id) {
-        return db.collection('subscribers').deleteOne({ email: req.params.email })
-          .then(() => res.sendStatus(200));
-      }
-      return res.sendStatus(400);
-    })
-    .catch(() => res.sendStatus(500));
-});
+app.get('/unsubscribe/:email/:id', unsubscribe);
+
+app.post('/send', send);
 
 app.post('/viewall', (req, res) => {
   if (req.body.password === process.env.PASSWORD) {
@@ -52,3 +39,23 @@ app.post('/viewall', (req, res) => {
   }
   return res.sendStatus(400);
 });
+
+app.post('/', (req, res) => {
+  const transporter = nodemailer.createTransport({
+    service: 'Outlook365',
+    auth: { user: process.env.EMAIL_ADDRESS, pass: process.env.EMAIL_PASSWORD },
+  });
+  transporter.sendMail({
+    from: `"${process.env.ORG_NAME}" <${process.env.EMAIL_ADDRESS}>`,
+    to: req.body.email,
+    subject: req.body.subject,
+    text: `
+${req.body.message}
+// Unsubscribe link here. <URL>/user email/user id
+`,
+  })
+    .then(() => res.sendStatus(200))
+    .catch(() => res.sendStatus(500));
+});
+
+// Test route that sends the email to the env var email

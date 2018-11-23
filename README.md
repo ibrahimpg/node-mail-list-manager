@@ -12,5 +12,5 @@ A Node.js API for collecting emails in order to build a mailing list as well as 
 
 |Endpoint|HTTP Verb|JSON Params|Action|
 |:-|:-|:-|:-|
-|/|POST|req.body.email|Creates a document in the "subscribers" collection (will create the collection if it doesn't exist) containing the email and a randomly generated 10 character _id.|
-|/delete/:email/:id|GET|N/A|Checks for the existence of a document containing the email and then deletes it if the id in the URL matches the id in the document.|
+|/subscribe|POST|req.body.email|Creates a document in the "subscribers" collection (will create the collection if it doesn't exist) containing the email and a randomly generated 10 character _id. Will respond with a 400 status if the email already exists in the database and will not create a duplicate document.|
+|/unsubscribe/:email/:id|GET|N/A|Checks for the existence of a document containing the email and then deletes it if the id in the URL matches the id in the document.|
