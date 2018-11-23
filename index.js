@@ -34,8 +34,10 @@ app.get('/delete/:email/:id', (req, res) => {
   db.collection('emails').findOne({ email: req.params.email })
     .then((emails) => {
       if (emails._id === req.params.id) {
-        return res.json('deleted your email bro!');
-        // remember to put actual delete logic
+        return db.collection('emails').remove({ email: req.params.email })
+          .then(() => res.json('deleted your email bro!'));
+      } if (emails === null) {
+        return res.json('no such email broh');
       }
       return res.json('no bueno amigo');
     })
