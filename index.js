@@ -33,9 +33,9 @@ app.post('/', (req, res) => {
 });
 
 app.get('/delete/:email/:id', (req, res) => {
-  db.collection('subscribers').findOne({ email: req.params.email })
-    .then((subscriber) => {
-      if (subscriber._id === req.params.id) {
+  db.collection('subscribers').find({ email: req.params.email }).toArray()
+    .then((subscribers) => {
+      if (subscribers[0]._id === req.params.id) {
         return db.collection('subscribers').remove({ email: req.params.email })
           .then(() => res.sendStatus(200));
       }
