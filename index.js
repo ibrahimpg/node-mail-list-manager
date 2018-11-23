@@ -7,8 +7,8 @@ const nodemailer = require('nodemailer');
 const cors = require('cors');
 
 // Controllers
-const subscribe = require('./controllers/subscribe');
-const unsubscribe = require('./controllers/unsubscribe');
+const subscribe = require('./controllers/subscribe').default;
+const unsubscribe = require('./controllers/unsubscribe').default;
 const send = require('./controllers/send');
 
 let db;
