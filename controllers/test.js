@@ -13,7 +13,7 @@ module.exports = (req, res) => {
 ${req.body.message}
 // Unsubscribe link here. <URL>/user email/user id
 `,
-    html: '<b>strong text!</b>',
+    html: `${req.body.html}`,
   })
     .then(() => res.sendStatus(200))
     .catch(() => res.sendStatus(500));
