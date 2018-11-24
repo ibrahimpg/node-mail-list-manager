@@ -1,4 +1,3 @@
-/* eslint-disable no-bitwise */
 const crypto = require('crypto');
 const mongoUtil = require('../controllers/mongoUtil');
 
@@ -9,8 +8,7 @@ module.exports = (req, res) => {
       if (subscribers.length === 0 && /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/.test(req.body.email) === true) {
         return db.collection('subscribers').insertOne({
           email: req.body.email,
-          _id: crypto.randomBytes(16).toString('hex'),
-          // [...Array(10)].map(() => (~~(Math.random() * 36)).toString(36)).join(''),
+          _id: crypto.randomBytes(8).toString('hex'),
         })
           .then(() => res.sendStatus(201));
       }
