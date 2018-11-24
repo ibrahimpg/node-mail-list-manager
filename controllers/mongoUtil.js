@@ -10,3 +10,10 @@ exports.connectToServer = (callback) => {
 };
 
 exports.getDb = () => _db;
+
+// mongodb.MongoClient.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
+//   .then((database) => {
+//     db = database.db();
+//     app.listen(process.env.PORT);
+//   })
+//   .catch(err => console.log(err));
