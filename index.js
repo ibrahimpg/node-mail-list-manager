@@ -35,6 +35,16 @@ app.post('/viewall', (req, res) => {
   return res.sendStatus(400);
 });
 
+app.post('/viewemails', (req, res) => {
+  if (req.body.password === process.env.PASSWORD) {
+    const db = mongoUtil.getDb();
+    return db.collection('subscribers').find({}, { email: 1 }).toArray()
+      .then(subscribers => res.json(subscribers))
+      .catch(() => res.sendStatus(500));
+  }
+  return res.sendStatus(400);
+});
+
 app.post('/send', send);
 
 app.post('/test', test);
