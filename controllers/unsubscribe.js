@@ -1,8 +1,7 @@
 const mongoUtil = require('../controllers/mongoUtil');
 
-const db = mongoUtil.getDb();
-
 module.exports = (req, res) => {
+  const db = mongoUtil.getDb();
   db.collection('subscribers').find({ email: req.params.email }).toArray()
     .then((subscribers) => {
       if (subscribers.length === 1 && subscribers[0]._id === req.params.id) {
