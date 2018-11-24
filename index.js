@@ -46,7 +46,7 @@ app.post('/viewall', (req, res) => {
   if (req.body.password === process.env.PASSWORD) {
     const database = mongoUtil.getDb();
     console.log(database);
-    return database.db().collection('subscribers').find().toArray()
+    return database.collection('subscribers').find().toArray()
       .then(subscribers => res.json(subscribers))
       .catch(() => res.sendStatus(500));
   }
