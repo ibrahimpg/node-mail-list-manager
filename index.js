@@ -8,6 +8,8 @@ const cors = require('cors');
 // MongoDB Connection Module
 const mongoUtil = require('./controllers/mongoUtil');
 
+const db = mongoUtil.getDb();
+
 // Controllers
 const subscribe = require('./controllers/subscribe');
 const unsubscribe = require('./controllers/unsubscribe');
@@ -21,8 +23,6 @@ const app = express();
 mongoUtil.connectToServer(() => {
   app.listen(process.env.PORT);
 });
-
-const db = mongoUtil.getDb();
 
 // mongodb.MongoClient.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
 //   .then((database) => {
