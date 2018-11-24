@@ -6,7 +6,7 @@ module.exports = (req, res) => {
     auth: { user: process.env.EMAIL_ADDRESS, pass: process.env.EMAIL_PASSWORD },
   });
   transporter.sendMail({
-    from: `IBRAHIM ENTERPRISES <${process.env.EMAIL_ADDRESS}>`,
+    from: process.env.EMAIL_ADDRESS,
     to: req.body.email,
     subject: req.body.subject,
     html: req.body.html,
