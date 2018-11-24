@@ -8,7 +8,7 @@ const cors = require('cors');
 // MongoDB Connection Module
 const mongoUtil = require('./controllers/mongoUtil');
 
-const database = mongoUtil.getDb();
+database = mongoUtil.getDb();
 
 // Controllers
 const subscribe = require('./controllers/subscribe');
