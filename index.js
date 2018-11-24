@@ -8,7 +8,7 @@ const cors = require('cors');
 // MongoDB Connection Module
 const mongoUtil = require('./controllers/mongoUtil');
 
-database = mongoUtil.getDb();
+// database = mongoUtil.getDb();
 
 // Controllers
 const subscribe = require('./controllers/subscribe');
@@ -44,6 +44,7 @@ app.get('/unsubscribe/:email/:id', unsubscribe);
 
 app.post('/viewall', (req, res) => {
   if (req.body.password === process.env.PASSWORD) {
+    const database = mongoUtil.getDb();
     console.log(database);
     return database.db().collection('subscribers').find().toArray()
       .then(subscribers => res.json(subscribers))
