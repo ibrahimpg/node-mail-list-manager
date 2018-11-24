@@ -1,9 +1,8 @@
 /* eslint-disable no-bitwise, no-undef */
 const mongoUtil = require('../controllers/mongoUtil');
 
-const db = mongoUtil.getDb();
-
 module.exports = (req, res) => {
+  const db = mongoUtil.getDb();
   db.collection('subscribers').find({ email: req.body.email }).toArray()
     .then((subscribers) => {
       if (subscribers.length === 0 && /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/.test(req.body.email) === true) {

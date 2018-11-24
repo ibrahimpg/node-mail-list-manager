@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const mongoUtil = require('../controllers/mongoUtil');
 
 const db = mongoUtil.getDb();
