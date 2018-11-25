@@ -14,9 +14,7 @@ const view = require('./controllers/view');
 
 const app = express();
 
-mongoUtil.connectToServer(() => {
-  app.listen(process.env.PORT);
-});
+mongoUtil.connectToServer();
 
 app.use(express.json());
 app.use(cors());
