@@ -3,13 +3,14 @@ const express = require('express');
 const cors = require('cors');
 
 // MongoDB Connection Module
-const mongoUtil = require('./controllers/mongoUtil');
+const mongoUtil = require('./config/database');
 
 // Controllers
 const subscribe = require('./controllers/subscribe');
 const unsubscribe = require('./controllers/unsubscribe');
 const send = require('./controllers/send');
 const test = require('./controllers/test');
+const view = require('./controllers/view');
 
 const app = express();
 
@@ -24,16 +25,7 @@ app.post('/subscribe', subscribe);
 
 app.get('/unsubscribe/:email/:id', unsubscribe);
 
-app.post('/viewall', (req, res) => {
-  if (req.body.password === process.env.PASSWORD) {
-    const db = mongoUtil.getDb();
-    return db.collection('subscribers').find().toArray()
-    //  return db.collection('subscribers').find({}, { projection: { _id: 0 } }).toArray()
-      .then(subscribers => res.json(subscribers))
-      .catch(() => res.sendStatus(500));
-  }
-  return res.sendStatus(400);
-});
+app.post('/view', view);
 
 app.post('/send', send);
 

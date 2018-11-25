@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const mongoUtil = require('../controllers/mongoUtil');
+const mongoUtil = require('../config/database');
 
 module.exports = (req, res) => {
   const db = mongoUtil.getDb();
