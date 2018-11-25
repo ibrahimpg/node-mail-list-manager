@@ -4,7 +4,7 @@ const transporter = require('../config/transporter');
 module.exports = (req, res) => {
   if (req.body.password === process.env.PASSWORD) {
     const db = mongodb.getDb();
-    return db.collection('subscribers').find({}, { projection: { _id: 0 } }).toArray()
+    return db.collection('subscribers').find().toArray()
       .then((subscribers) => {
         subscribers.forEach((subscriber) => {
           transporter.sendMail({
