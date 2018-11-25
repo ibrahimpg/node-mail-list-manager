@@ -6,7 +6,7 @@ module.exports = (req, res) => {
     .then((subscribers) => {
       if (subscribers.length === 1 && subscribers[0]._id === req.params.id) {
         return db.collection('subscribers').deleteOne({ email: req.params.email })
-          .then(() => res.sendStatus(200));
+          .then(() => res.status(200).send('Successfully unsubscribed from this mailing list.'));
       }
       return res.sendStatus(400);
     })
