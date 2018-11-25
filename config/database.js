@@ -5,7 +5,7 @@ const app = express();
 
 let _db;
 
-exports.connectToServer = mongodb.MongoClient.connect(process.env.MONGODB_URI,
+exports.connectToServer = () => mongodb.MongoClient.connect(process.env.MONGODB_URI,
   { useNewUrlParser: true })
   .then((database) => {
     _db = database.db();
