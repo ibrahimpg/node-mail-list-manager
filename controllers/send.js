@@ -15,7 +15,7 @@ module.exports = (req, res) => {
           });
         })
           .then(() => res.sendStatus(200))
-          .catch(() => res.sendStatus(500));
+          .catch(err => res.json(err));
       })
       .catch(() => res.sendStatus(500));
   }
