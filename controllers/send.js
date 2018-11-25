@@ -8,7 +8,7 @@ module.exports = (req, res) => {
       .then((subscribers) => { // has to be changed to a forEach or .map for unsub links to work
         subscribers.forEach(transporter.sendMail({
           from: process.env.EMAIL_ADDRESS,
-          to: subscribers,
+          to: subscribers.email,
           subject: req.body.subject,
           html: `${req.body.html}<br><p>You are ${subscribers.email}</p>`,
         }))
