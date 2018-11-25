@@ -13,9 +13,9 @@ module.exports = (req, res) => {
             subject: req.body.subject,
             html: `${req.body.html}<br><p>You are ${subscriber.email}</p>`,
           });
-        })
-          .then(() => res.sendStatus(200));
+        });
       })
+      .then(() => res.sendStatus(200))
       .catch(() => res.sendStatus(500));
   }
   return res.sendStatus(400);
