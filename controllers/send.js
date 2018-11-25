@@ -11,7 +11,12 @@ module.exports = (req, res) => {
             from: process.env.EMAIL_ADDRESS,
             to: subscriber.email,
             subject: req.body.subject,
-            html: `${req.body.html}<br><p>You are ${subscriber.email}</p>`,
+            html: `${req.body.html}<br>
+            <p>
+            Click 
+            <a href="${process.env.SERVER_URL}/unsubscribe/${subscriber.email}/${subscriber._id}">here</a> 
+            to unsubscribe
+            </p>`,
           });
         });
       })
