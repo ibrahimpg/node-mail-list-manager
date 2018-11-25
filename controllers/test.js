@@ -1,10 +1,6 @@
-const nodemailer = require('nodemailer');
+const transporter = require('../config/transporter');
 
 module.exports = (req, res) => {
-  const transporter = nodemailer.createTransport({
-    service: 'Outlook365',
-    auth: { user: process.env.EMAIL_ADDRESS, pass: process.env.EMAIL_PASSWORD },
-  });
   transporter.sendMail({
     from: process.env.EMAIL_ADDRESS,
     to: req.body.email,
