@@ -1,9 +1,7 @@
 // Packages
 const express = require('express');
 const cors = require('cors');
-
-// MongoDB Connection Module
-const mongoUtil = require('./config/database');
+const mongodb = require('./config/database');
 
 // Controllers
 const subscribe = require('./controllers/subscribe');
@@ -14,7 +12,7 @@ const view = require('./controllers/view');
 
 const app = express();
 
-mongoUtil.connectToServer()
+mongodb.connectToServer()
   .then(() => app.listen(process.env.PORT))
   .catch(err => console.log(err));
 

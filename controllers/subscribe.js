@@ -1,8 +1,8 @@
 const crypto = require('crypto');
-const mongoUtil = require('../config/database');
+const mongodb = require('../config/database');
 
 module.exports = (req, res) => {
-  const db = mongoUtil.getDb();
+  const db = mongodb.getDb();
   db.collection('subscribers').find({ email: req.body.email }).toArray()
     .then((subscribers) => {
       if (subscribers.length === 0 && /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/.test(req.body.email) === true) {
