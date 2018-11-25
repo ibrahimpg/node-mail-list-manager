@@ -6,14 +6,15 @@ module.exports = (req, res) => {
     const db = mongodb.getDb();
     return db.collection('subscribers').find({}, { projection: { _id: 0 } }).toArray()
       .then((subscribers) => { // has to be changed to a forEach or .map for unsub links to work
-        subscribers.forEach(transporter.sendMail({
-          from: process.env.EMAIL_ADDRESS,
-          to: subscribers,
-          subject: req.body.subject,
-          html: `${req.body.html}<br><p>You are ${subscribers.email}</p>`,
-        }))
-          .then(() => res.sendStatus(200))
-          .catch(err => console.log(err));
+        subscribers.forEach((subscriber) => {
+          transporter.sendMail({
+            from: process.env.EMAIL_ADDRESS,
+            to: subscriber.email,
+            subject: req.body.subject,
+            html: `${req.body.html}<br><p>You are ${subscriber.email}</p>`,
+          });
+        })
+          .then(() => res.sendStatus(200));
       })
       .catch(() => res.sendStatus(500));
   }
