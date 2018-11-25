@@ -4,7 +4,7 @@ module.exports = nodemailer.createTransport({
   pool: true,
   host: 'mail.nanoca.sh',
   port: 26,
-  secure: true, // use TLS
+  secure: false, // use TLS
   tls: {
     // do not fail on invalid certs
     rejectUnauthorized: false,
