@@ -12,10 +12,10 @@ module.exports = (req, res) => {
             to: subscriber.email,
             subject: req.body.subject,
             html: `${req.body.html}<br><p>You are ${subscriber.email}</p>`,
-          })
-            .catch(() => res.sendStatus(500));
+          });
         })
-          .then(() => res.sendStatus(200));
+          .then(() => res.sendStatus(200))
+          .catch(() => res.sendStatus(500));
       })
       .catch(() => res.sendStatus(500));
   }
