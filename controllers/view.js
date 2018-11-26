@@ -1,7 +1,7 @@
 const mongodb = require('../config/database');
 
 module.exports = (req, res) => {
-  if (req.body.password === process.env.PASSWORD) {
+  if (req.body.password === process.env.ACCESS_PASSWORD) {
     const db = mongodb.getDb();
     return db.collection('subscribers').find({}, { projection: { _id: 0 } }).toArray()
       .then(subscribers => res.json(subscribers))

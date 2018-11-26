@@ -2,7 +2,7 @@ const mongodb = require('../config/database');
 const transporter = require('../config/transporter');
 
 module.exports = (req, res) => {
-  if (req.body.password === process.env.PASSWORD) {
+  if (req.body.password === process.env.ACCESS_PASSWORD) {
     const db = mongodb.getDb();
     return db.collection('subscribers').find().toArray()
       .then((subscribers) => {
