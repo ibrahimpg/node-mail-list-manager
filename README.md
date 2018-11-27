@@ -1,6 +1,6 @@
 # Node Mail List Manager
 
-## A lightweight Node.js API for building and interacting with a mailing list.
+## A Node.js API for building, managing, and interacting with a mailing list.
 
 ---
 
