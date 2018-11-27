@@ -10,7 +10,7 @@
 
 **EMAIL_ADDRESS** - The email address you want to send and test from.
 
-**EMAIL_PASSWORD** - The psasword for the email address you want to send and test from.
+**EMAIL_PASSWORD** - The password for the email address you want to send and test from.
 
 **ACCESS_PASSWORD** - The password protecting the send, test, and view routes in the API. Make sure it is a strong password that is not easily guessed.
 
