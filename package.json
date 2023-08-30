@@ -20,7 +20,7 @@
   "dependencies": {
     "cors": "2.8.5",
     "express": "4.16.4",
-    "mongodb": "3.6.2",
+    "mongodb": "3.6.10",
     "nodemailer": ">=6.4.16"
   },
   "devDependencies": {
